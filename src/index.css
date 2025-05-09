@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@theme {
+    --font-audiowide: ['Audiowide', 'cursive' 'sans-serif'];
+    --font-lexend: ["Lexend Deca", 'sans-serif'];
+}
+
+body {
+    overflow-x: hidden;
+}
