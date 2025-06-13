@@ -1,5 +1,5 @@
 import React from 'react';
-import hero from '../assets/hero.png';
+import hero from '../../assets/hero.png';
 import { FcGoogle } from "react-icons/fc";
 import { TbBrandApple } from "react-icons/tb";
 

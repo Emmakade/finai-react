@@ -1,21 +1,19 @@
 import React from 'react';
-import Navbar from './Navbar/Navbar';
-import Hero from './Hero/Hero';
-import Features from './Features/Features';
-import Mission from './Mission/Mission';
-import Stores from './Stores/Stores';
-import Footer from './Footer/Footer';
+import { BrowserRouter as Router, Routes, Route, } from 'react-router-dom';
+import Landingpage from './components/Landingpage/Landingpage';
+import Signup from './components/Signup/Signup';
+import Login from './components/Login/Login';
+
 
 function App() {
   return (
-    <div>
-      <Navbar />
-      <Hero />
-      <Features />
-      <Mission />
-      <Stores />
-      <Footer />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Landingpage />} />
+        <Route path="/Signup" element={<Signup />} />
+        <Route path="/Login" element={<Login />} />
+      </Routes>
+    </Router>
   )
 }
 

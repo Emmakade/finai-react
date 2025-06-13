@@ -1,10 +1,10 @@
 import React from 'react';
-import A from '../assets/A.png';
-import I from '../assets/I.png';
-import P from '../assets/P.png';
-import analysis from '../assets/analysis.png';
-import insights from '../assets/insights.png';
-import portfolio from '../assets/portfolio.png';
+import A from '../../assets/A.png';
+import I from '../../assets/I.png';
+import P from '../../assets/P.png';
+import analysis from '../../assets/analysis.png';
+import insights from '../../assets/insights.png';
+import portfolio from '../../assets/portfolio.png';
 
 const Features = () => {
     return (

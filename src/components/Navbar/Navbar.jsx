@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { FaArrowRight } from "react-icons/fa";
-import logo from '../assets/logo.png';
+import logo from '../../assets/logo.png';
 import { IoMenu } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);
 
     const handleToggle = () => {
         setOpen(!open);
+    };
+
+    const handleLinkClick = () => {
+        setOpen(false); // Close mobile menu after clicking a link
     };
 
     return (
@@ -28,41 +33,46 @@ const Navbar = () => {
                     <li><a className="font-lexend text-sm leading-6 font-medium text-[#181818]" href="#contact">Contact</a></li>
                 </ul>
 
-                {/* CTA Button - desktop */}
+                {/* CTA Button - Desktop */}
                 <div className="hidden md:flex">
-                    <button className="flex justify-center cursor-pointer items-center gap-4 w-[211px] h-[56px] p-2 rounded-[36px] bg-[#1E388A] text-white font-lexend text-base leading-6 font-medium">
-                        Download app
+                    <Link to='Signup' className="flex justify-center cursor-pointer items-center gap-4 w-[211px] h-[56px] p-2 rounded-[36px] bg-[#1E388A] text-white font-lexend text-base leading-6 font-medium">
+                        Sign up
                         <span className="w-[40px] h-[40px] p-4 rounded-[36px] bg-[#F8C630] flex items-center justify-center text-black">
                             <FaArrowRight size={16} />
                         </span>
-                    </button>
+                    </Link>
                 </div>
 
                 {/* Mobile Menu Toggle */}
                 <div
                     className="md:hidden text-3xl cursor-pointer border border-[#1E388A] rounded-full p-2"
                     onClick={handleToggle}
+                    role="button"
+                    aria-label="Toggle mobile menu"
+                    tabIndex={0}
                 >
                     {open ? <MdClose className="text-[#1E388A]" /> : <IoMenu className="text-[#1E388A]" />}
                 </div>
             </div>
 
             {/* Mobile Nav */}
-            <div className={`absolute top-20 left-0 w-full bg-[#f7f7f7] flex flex-col items-center space-y-6 py-10 transition-all duration-300 ease-in-out md:hidden ${open ? 'block' : 'hidden'}`}>
+            <div className={`absolute top-20 left-0 w-full bg-[#f7f7f7] flex flex-col items-center transition-all duration-300 ease-in-out md:hidden ${open ? 'block' : 'hidden'}`}>
                 <ul className="flex flex-col items-center space-y-6 py-8">
-                    <li><a className="font-lexend text-sm leading-6 font-medium text-[#181818]" href="#about">About</a></li>
-                    <li><a className="font-lexend text-sm leading-6 font-medium text-[#181818]" href="#features">Features</a></li>
-                    <li><a className="font-lexend text-sm leading-6 font-medium text-[#181818]" href="#blog">Blog</a></li>
-                    <li><a className="font-lexend text-sm leading-6 font-medium text-[#181818]" href="#contact">Contact</a></li>
+                    <li><a onClick={handleLinkClick} className="font-lexend text-sm leading-6 font-medium text-[#181818]" href="#about">About</a></li>
+                    <li><a onClick={handleLinkClick} className="font-lexend text-sm leading-6 font-medium text-[#181818]" href="#features">Features</a></li>
+                    <li><a onClick={handleLinkClick} className="font-lexend text-sm leading-6 font-medium text-[#181818]" href="#blog">Blog</a></li>
+                    <li><a onClick={handleLinkClick} className="font-lexend text-sm leading-6 font-medium text-[#181818]" href="#contact">Contact</a></li>
+                </ul>
 
-                    {/* CTA Button - mobile */}
+                {/* CTA Button - Mobile */}
+                <div className="pb-6">
                     <button className="flex justify-center cursor-pointer items-center gap-4 w-[211px] h-[56px] p-2 rounded-[36px] bg-[#1E388A] text-white font-lexend text-base leading-6 font-medium">
                         Download app
                         <span className="w-[40px] h-[40px] p-4 rounded-[36px] bg-[#F8C630] flex items-center justify-center text-black">
                             <FaArrowRight size={16} />
                         </span>
                     </button>
-                </ul>
+                </div>
             </div>
         </nav>
     );
