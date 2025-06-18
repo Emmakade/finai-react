@@ -8,11 +8,8 @@ const Login = () => {
     const navigate = useNavigate();
 
     const [form, setForm] = useState({
-        firstname: '',
-        lastname: '',
         email: '',
         password: '',
-        agreed: false,
     });
 
     const [showPassword, setShowPassword] = useState(false);
@@ -25,14 +22,33 @@ const Login = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!form.agreed) {
-            alert("You must agree to the terms to continue.");
+        if (form.email === '' || form.password === '') {
+            alert("Enter your details before you continue.");
             return;
         }
-        console.log("Form submitted:", form);
-        navigate('/Login');
+        try {
+            const response = await fetch('https://finai-laravel.up.railway.app/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: form.email,
+                    password: form.password,
+                }),
+            });
+            const data = await response.json();
+            if (response.ok) {
+                // Optionally store token: localStorage.setItem('token', data.token);
+                navigate('/dashboard');
+            } else {
+                alert(data.message || "Login failed. Please check your credentials.");
+            }
+        } catch (error) {
+            alert("An error occurred. Please try again.");
+        }
     };
 
     return (
@@ -113,7 +129,7 @@ const Login = () => {
                     type="submit"
                     className='bg-[#1E388A] text-white rounded-[24px] px-9 py-3 w-full sm:w-[125px] h-[48px] font-lexend text-sm flex justify-center items-center mx-auto cursor-pointer'
                 >
-                    Sign in
+                    Log in
                 </button>
 
                 {/* Login Redirect */}
