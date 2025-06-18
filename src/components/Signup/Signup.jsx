@@ -25,18 +25,56 @@ const Signup = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const [loading, setLoading] = useState(false);
+
+    // Email validation regex
+    const validateEmail = (email) => {
+        // Simple RFC 5322 compliant regex
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (form.email === '' || form.password === '') {
+        if (form.firstname === '' || form.lastname === '' || form.email === '' || form.password === '') {
             alert("Enter your details before you continue.");
             return;
         }
-        else if (!form.agreed) {
+        if (!validateEmail(form.email)) {
+            alert("Please enter a valid email address.");
+            return;
+        }
+        if (!form.agreed) {
             alert("You must agree to the terms to continue.");
             return;
         }
-        console.log("Form submitted:", form);
-        navigate('/Login');
+
+        setLoading(true);
+        try {
+            const response = await fetch('https://finai-laravel.up.railway.app/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    firstname: form.firstname,
+                    lastname: form.lastname,
+                    email: form.email,
+                    password: form.password,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                navigate('/Login');
+            } else {
+                alert(data.message || 'Registration failed.');
+            }
+        } catch (error) {
+            alert('An error occurred. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -60,7 +98,8 @@ const Signup = () => {
                         <FaApple className='bg-[#181818] text-white p-2 rounded-full w-8 h-8' />
                         Continue with Apple
                     </button>
-                    <button type="button" className='flex items-center gap-2 bg-[#1E388A] text-white rounded-[24px] border-l-[3px] px-5 py-2 w-full sm:w-[214px] text-nowrap'>
+                    <button type="button" className='flex items-center gap-2 bg-[#1E388A] text-white rounded-[24px] border-l-[3px] px-5 py-2 w-full sm:w-[214px] text-nowrap' 
+                    onClick={() => window.location.href = 'https://finai-laravel.up.railway.app/api/auth/google'}>
                         <FcGoogle className='bg-white p-2 rounded-full w-8 h-8' />
                         Continue with Google
                     </button>
