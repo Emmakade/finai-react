@@ -27,7 +27,11 @@ const Signup = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!form.agreed) {
+        if (form.email === '' || form.password === '') {
+            alert("Enter your details before you continue.");
+            return;
+        }
+        else if (!form.agreed) {
             alert("You must agree to the terms to continue.");
             return;
         }
