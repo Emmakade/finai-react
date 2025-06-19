@@ -68,14 +68,14 @@ const Login = () => {
     };
 
     return (
-        <div className='bg-[#1E388A] min-h-screen w-full flex flex-col items-center px-4'>
+        <div className='bg-[#1E388A] min-h-screen w-full flex flex-col items-center px-2'>
             {/* Header logo */}
-            <div className='w-full max-w-[1440px] flex justify-between items-center gap-8 px-4 sm:px-10 md:px-20 py-6'>
+            <div className='w-full max-w-[1200px] flex justify-between items-center gap-8 px-4 sm:px-10 md:px-20 py-6'>
                 <img src={logo} alt="logo" className="w-28 md:w-36" />
             </div>
 
             {/* Signup Form */}
-            <form onSubmit={handleSubmit} className='w-full max-w-[700px] mt-10 md:mt-16 rounded-[24px] p-6 md:p-10 bg-white shadow-md flex flex-col gap-8 md:gap-10'>
+            <form onSubmit={handleSubmit} className='w-full max-w-[600px] mt-10 md:mt-6 rounded-[24px] p-6 md:p-10 bg-white shadow-md flex flex-col gap-8 md:gap-4'>
                 {/* Back and Title */}
                 <div className='flex justify-between items-start w-full'>
                     <Link className='font-lexend text-[#1e38aa] font-medium text-sm underline' to='/'>Back</Link>
@@ -126,7 +126,7 @@ const Login = () => {
                         value={form.password}
                         onChange={handleChange}
                         className='rounded border border-[#8488AC] p-3 w-full pr-12 text-sm'
-                        placeholder='Password (minimum of 8 characters)'
+                        placeholder='Password (minimum of 6 characters)'
                     />
                     <span
                         onClick={() => setShowPassword(!showPassword)}
