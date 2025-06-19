@@ -3,14 +3,14 @@ import logo from '../../assets/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaEye, FaEyeSlash } from "react-icons/fa";
-import '../../index.css'; // Ensure you have the correct path to your CSS file
+import '../loader.css';
 
 const Signup = () => {
     const navigate = useNavigate();
 
     const [form, setForm] = useState({
-        firstname: '',
-        lastname: '',
+        first_name: '',
+        last_name: '',
         email: '',
         password: '',
         agreed: false,
@@ -35,7 +35,7 @@ const Signup = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (form.firstname === '' || form.lastname === '' || form.email === '' || form.password === '') {
+        if (form.first_name === '' || form.last_name === '' || form.email === '' || form.password === '') {
             alert("Enter your details before you continue.");
             return;
         }
@@ -48,7 +48,7 @@ const Signup = () => {
             return;
         }
 
-        setLoading(loading);
+        setLoading(true);
         try {
             const response = await fetch('https://finai-laravel.up.railway.app/api/register', {
                 method: 'POST',
@@ -56,14 +56,15 @@ const Signup = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    firstname: form.firstname,
-                    lastname: form.lastname,
+                    first_name: form.first_name,
+                    last_name: form.last_name,
                     email: form.email,
                     password: form.password,
                 }),
             });
 
             const data = await response.json();
+            console.log('Form body:', data);
 
             if (response.ok) {
                 navigate('/Login');
@@ -73,7 +74,7 @@ const Signup = () => {
         } catch (error) {
             alert('An error occurred. Please try again.');
         } finally {
-            setLoading(loading);
+            setLoading(false);
         }
     };
 
@@ -94,11 +95,11 @@ const Signup = () => {
 
                 {/* Social Signups */}
                 <div className='flex flex-col sm:flex-row justify-center items-center gap-5'>
-                    <button type="button" className='flex items-center gap-2 border text-black border-[#181818] rounded-[24px] px-5 py-2 w-full sm:w-[205px] text-nowrap'>
+                    <button type="button" className='flex items-center justify-center gap-2 border text-black border-[#181818] rounded-[24px] px-4 py-2 w-full sm:w-[205px] text-sm'>
                         <FaApple className='bg-[#181818] text-white p-2 rounded-full w-8 h-8' />
                         Continue with Apple
                     </button>
-                    <button type="button" className='flex items-center gap-2 bg-[#1E388A] text-white rounded-[24px] border-l-[3px] px-5 py-2 w-full sm:w-[214px] text-nowrap' 
+                    <button type="button" className='flex items-center justify-center gap-2 bg-[#1E388A] text-white rounded-[24px] border-l-[3px] px-4 py-2 w-full sm:w-[214px] text-sm' 
                     onClick={() => window.location.href = 'https://finai-laravel.up.railway.app/api/auth/google'}>
                         <FcGoogle className='bg-white p-2 rounded-full w-8 h-8' />
                         Continue with Google
@@ -115,12 +116,12 @@ const Signup = () => {
                 {/* Name Inputs */}
                 <div className='flex flex-col sm:flex-row gap-5'>
                     <div className='flex flex-col gap-2 w-full'>
-                        <label htmlFor="firstname" className='text-[#393A53] text-sm leading-4 font-lexend'>First Name</label>
+                        <label htmlFor="first_name" className='text-[#393A53] text-sm leading-4 font-lexend'>First Name</label>
                         <input
                             type="text"
-                            id="firstname"
-                            name="firstname"
-                            value={form.firstname}
+                            id="first_name"
+                            name="first_name"
+                            value={form.first_name}
                             onChange={handleChange}
                             className='rounded border border-[#8488AC] p-3 w-full'
                             placeholder='Input Name Here'
@@ -128,12 +129,12 @@ const Signup = () => {
                     </div>
 
                     <div className='flex flex-col gap-2 w-full'>
-                        <label htmlFor="lastname" className='text-[#393A53] text-sm leading-4 font-lexend'>Last Name</label>
+                        <label htmlFor="last_name" className='text-[#393A53] text-sm leading-4 font-lexend'>Last Name</label>
                         <input
                             type="text"
-                            id="lastname"
-                            name="lastname"
-                            value={form.lastname}
+                            id="last_name"
+                            name="last_name"
+                            value={form.last_name}
                             onChange={handleChange}
                             className='rounded border border-[#8488AC] p-3 w-full'
                             placeholder='Input Name Here'
@@ -191,7 +192,11 @@ const Signup = () => {
                 </div>
 
                 {/* Submit Button */}
-                <button type="submit" className='bg-[#1E388A] text-white rounded-[24px] px-9 py-3 w-full sm:w-[125px] h-[48px] font-lexend text-sm flex justify-center items-center mx-auto cursor-pointer'>Continue</button>
+                {/* <button type="submit" className='bg-[#1E388A] text-white rounded-[24px] px-9 py-3 w-full sm:w-[125px] h-[48px] font-lexend text-sm flex justify-center items-center mx-auto cursor-pointer'>Continue</button> */}
+                <button type="submit" className='bg-[#1E388A] text-white rounded-[24px] px-9 py-3 w-full sm:w-[125px] h-[48px] font-lexend text-sm flex justify-center items-center mx-auto cursor-pointer' disabled={loading}>
+                    {loading && <span className="loader"></span>}
+                    {loading ? "Processing..." : "Continue"}
+                </button>
 
                 {/* Login Redirect */}
                 <p className='text-[#393A53] text-center font-lexend'>Already have an account? <Link to='/login' className='text-[#1e38aa] underline'>Login</Link></p>

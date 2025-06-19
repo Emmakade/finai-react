@@ -3,6 +3,7 @@ import logo from '../../assets/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaEye, FaEyeSlash } from "react-icons/fa";
+import '../loader.css';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -22,12 +23,24 @@ const Login = () => {
         }));
     };
 
+    const [loading, setLoading] = useState(false);
+
+    const validateEmail = (email) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (form.email === '' || form.password === '') {
             alert("Enter your details before you continue.");
             return;
         }
+        if (!validateEmail(form.email)) {
+            alert("Please enter a valid email address.");
+            return;
+        }
+
+        setLoading(true);
         try {
             const response = await fetch('https://finai-laravel.up.railway.app/api/login', {
                 method: 'POST',
@@ -41,13 +54,16 @@ const Login = () => {
             });
             const data = await response.json();
             if (response.ok) {
-                // Optionally store token: localStorage.setItem('token', data.token);
+                localStorage.setItem('token', data.token);
+                console.log('Login response:', data);
                 navigate('/dashboard');
             } else {
                 alert(data.message || "Login failed. Please check your credentials.");
             }
         } catch (error) {
             alert("An error occurred. Please try again.");
+        }  finally {
+            setLoading(false);
         }
     };
 
@@ -72,7 +88,8 @@ const Login = () => {
                         <FaApple className='bg-[#181818] text-white p-2 rounded-full w-8 h-8' />
                         Continue with Apple
                     </button>
-                    <button type="button" className='flex items-center justify-center gap-2 bg-[#1E388A] text-white rounded-[24px] border-l-[3px] px-4 py-2 w-full sm:w-[214px] text-sm'>
+                    <button type="button" className='flex items-center justify-center gap-2 bg-[#1E388A] text-white rounded-[24px] border-l-[3px] px-4 py-2 w-full sm:w-[214px] text-sm' 
+                    onClick={() => window.location.href = 'https://finai-laravel.up.railway.app/api/auth/google'}>
                         <FcGoogle className='bg-white p-2 rounded-full w-8 h-8' />
                         Continue with Google
                     </button>
@@ -127,9 +144,11 @@ const Login = () => {
                 {/* Submit Button */}
                 <button
                     type="submit"
-                    className='bg-[#1E388A] text-white rounded-[24px] px-9 py-3 w-full sm:w-[125px] h-[48px] font-lexend text-sm flex justify-center items-center mx-auto cursor-pointer'
+                    className='bg-[#1E388A] text-white rounded-[24px] px-9 py-3 w-full sm:w-[125px] h-[48px] font-lexend text-sm flex justify-center items-center mx-auto cursor-pointer' 
+                     disabled={loading}
                 >
-                    Log in
+                    {loading && <span className="loader"></span>}
+                    {loading ? "Processing..." : "Continue"}
                 </button>
 
                 {/* Login Redirect */}
