@@ -30,7 +30,6 @@ const Signup = () => {
 
     // Email validation regex
     const validateEmail = (email) => {
-        // Simple RFC 5322 compliant regex
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
 
@@ -49,7 +48,7 @@ const Signup = () => {
             return;
         }
 
-        setLoading(true);
+        setLoading(loading);
         try {
             const response = await fetch('https://finai-laravel.up.railway.app/api/register', {
                 method: 'POST',
@@ -74,7 +73,7 @@ const Signup = () => {
         } catch (error) {
             alert('An error occurred. Please try again.');
         } finally {
-            setLoading(false);
+            setLoading(loading);
         }
     };
 
