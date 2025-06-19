@@ -81,12 +81,12 @@ const Signup = () => {
     return (
         <div className='bg-[#1E388A] min-h-screen w-full flex flex-col items-center'>
             {/* Header logo */}
-            <div className='w-full max-w-[1440px] flex justify-between items-center gap-8 px-20 py-6'>
+            <div className='w-full max-w-[1200px] flex justify-between items-center gap-8 px-20 py-6'>
                 <img src={logo} alt="logo" />
             </div>
 
             {/* Signup Form */}
-            <form onSubmit={handleSubmit} className='w-[90%] max-w-[700px] mt-16 rounded-[24px] p-10 bg-white shadow-[0px_4px_8px_0px_#00000014] flex flex-col gap-10'>
+            <form onSubmit={handleSubmit} className='w-[90%] max-w-[600px] mt-6 rounded-[24px] p-10 bg-white shadow-[0px_4px_8px_0px_#00000014] flex flex-col gap-4'>
                 {/* Back and Title */}
                 <div className='flex justify-between items-start w-full'>
                     <Link className='font-lexend text-[#1e38aa] font-medium text-sm leading-5 underline' to='/'>Back</Link>
@@ -166,7 +166,7 @@ const Signup = () => {
                         value={form.password}
                         onChange={handleChange}
                         className='rounded border border-[#8488AC] p-3 w-full pr-12'
-                        placeholder='Password (minimum of 8 characters)'
+                        placeholder='Password (minimum of 6 characters)'
                     />
                     <span
                         onClick={() => setShowPassword(!showPassword)}
