@@ -10,4 +10,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
   },
-})
+  server: {
+    historyApiFallback: true, // For local development
+  },
+});
