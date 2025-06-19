@@ -3,7 +3,7 @@ import logo from '../../assets/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaEye, FaEyeSlash } from "react-icons/fa";
-import './index.css';
+import '../../index.css'; // Ensure you have the correct path to your CSS file
 
 const Signup = () => {
     const navigate = useNavigate();
